@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DevOps Product</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding-top: 80px;
+    }
+    button {
+      padding: 12px 20px;
+      background: #38bdf8;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .box {
+      background: #1e293b;
+      padding: 30px;
+      width: 400px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>DevOps Full Stack Product</h1>
+  <p>This frontend talks to backend using Docker internal networking.</p>
+  <button onclick="checkBackend()">Check Backend</button>
+  <p id="status">Waiting...</p>
+</div>
+
+<script>
+function checkBackend(){
+  fetch("/api/")
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById("status").innerHTML =
+        "Service: " + data.service + "<br>" +
+        "Host: " + data.hostname + "<br>" +
+        "Time: " + data.time;
+    })
+    .catch(() => {
+      document.getElementById("status").innerText = "Backend not reachable";
+    });
+}
+</script>
+
+</body>
+</html>
