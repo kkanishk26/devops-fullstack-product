@@ -2,35 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repo') {
+        stage('Pull Code') {
             steps {
-                echo "Code already cloned by Jenkins"
+                git branch: 'main', url: 'https://github.com/kkanishk26/devops-fullstack-product.git'
             }
         }
 
-        stage('Build Images') {
+        stage('Build & Deploy') {
             steps {
                 sh '''
-                docker compose build
-                '''
-            }
-        }
-
-        stage('Deploy Containers') {
-            steps {
-                sh '''
+                cd /home/kanishk/devops-fullstack-product
                 docker compose down
+                docker compose build
                 docker compose up -d
-                '''
-            }
-        }
-
-        stage('Verify') {
-            steps {
-                sh '''
-                sleep 5
-                curl http://localhost:5000
-                curl http://localhost:8082
                 '''
             }
         }
